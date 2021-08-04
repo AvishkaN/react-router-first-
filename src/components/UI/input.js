@@ -1,15 +1,25 @@
-import React from 'react'
+import React,{forwardRef} from 'react'
 import styled from 'styled-components'
 
-const input=(props)=> {
-    return (
-        <DIV className='input'>
-            <label htmlFor={props.input.id}>{props.label}</label>
-            <input  {...props.input}/>
-        </DIV>
-    )
-}
+// const input=(props)=> {
+//     return (
+//         <DIV className='input'>
+//             <label htmlFor={props.input.id}>{props.label}</label>
+//             <input  {...props.input}/>
+//         </DIV>
+//     )
+// }
 
+
+const input=forwardRef((props,ref)=>{
+ 
+  return (
+            <DIV className='input'>
+                <label htmlFor={props.input.id}>{props.label}</label>
+                <input ref={props.inputRef} {...props.input}/>
+            </DIV>
+        )
+});
 
 const DIV=styled.div`
 &.input {
