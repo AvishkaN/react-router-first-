@@ -1,6 +1,6 @@
 import React from 'react';
-import {useSelector,useDispatch} from 'react-redux';
-import {authActions} from './../../store/index';
+import {useSelector,useDispatch} from 'react-redux'; // state(data)
+import {authActions} from './../../store/index'; // actions
 
 
 function Header() {
