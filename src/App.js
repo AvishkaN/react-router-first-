@@ -32,7 +32,6 @@ function App() {
     <>
     {console.log(`rendering..`)}
     {console.log(useSelector(state=>state))}
-    {console.log(dispatch)}
     <Header/>
     <h1>counter</h1>
       <button onClick={incrementHandler}>+</button>
