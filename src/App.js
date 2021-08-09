@@ -1,33 +1,45 @@
-import React,{useState} from 'react';
-import Header from './components/Layout/Header';
-import Meals from './components/Meals/Meals';
-import Cart from './components/Cart/Cart';
-import CartProvider from '../src/store/CardProvider';
-import Test from '../src/TEST/test';
-
+import React from 'react';
+import Form from './components/form';
+import {useSelector,useDispatch} from 'react-redux';
+import {countrerActions} from './../src/store/index';
 
 function App() {
-  const [cardIsShown,setCardIsShown]=useState(false);
 
-  const showHandler=()=>{
-    setCardIsShown(true);
+ const dispatch=useDispatch();
+ const counter=useSelector(state=>state.counter);
+ const IsShowHandler=useSelector(state=>state.showCounter);
+
+
+  const incrementHandler=()=>{
+    dispatch({type:'increment'})
   };
-  const hideHandler=()=>{
-    setCardIsShown(false);
+  const decrementHandler=()=>{
+
+    dispatch({type:'decrement'})
   };
+  const incresesHandler=()=>{
 
+    dispatch({type:'customIncrese',amount:10})
+  };
+  const toggleHandler=()=>{
 
+    dispatch({type:'toggle'})
+  };
 
 
   return (
-    <CartProvider>
-      {cardIsShown && <Cart onClick={hideHandler}/>}
-      <Header onClick={showHandler}/>
-      <main>
-        <Meals/>
-      {/* <Test/> */}
-      </main>
-    </CartProvider>
+    <>
+    {console.log(`rendering..`)}
+    {console.log(countrerActions)}
+    {console.log(counter)}
+    <h1>counter</h1>
+      <button onClick={incrementHandler}>+</button>
+      <button onClick={decrementHandler}>-</button>
+      <button onClick={incresesHandler}>+10</button>
+      <button onClick={toggleHandler}>toggle</button>
+      {IsShowHandler && <h1>{counter}</h1>}
+     <Form/>
+    </>
   );
 }
 
