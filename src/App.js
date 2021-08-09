@@ -1,37 +1,39 @@
 import React from 'react';
 import Form from './components/form';
+import Header from './components/Header/header';
 import {useSelector,useDispatch} from 'react-redux';
-import {countrerActions} from './../src/store/index';
+import {counterActions} from './../src/store/index';
 
 function App() {
 
  const dispatch=useDispatch();
- const counter=useSelector(state=>state.counter);
- const IsShowHandler=useSelector(state=>state.showCounter);
+ const counter=useSelector(state=>state.counter.counter);
+ const IsShowHandler=useSelector(state=>state.counter.showCounter);
 
 
   const incrementHandler=()=>{
-    dispatch({type:'increment'})
+    dispatch(counterActions.increment());
   };
   const decrementHandler=()=>{
 
-    dispatch({type:'decrement'})
+    dispatch(counterActions.decrement());
   };
   const incresesHandler=()=>{
 
-    dispatch({type:'customIncrese',amount:10})
+    dispatch(counterActions.increase(10))
   };
   const toggleHandler=()=>{
 
-    dispatch({type:'toggle'})
+    dispatch(counterActions.toggleCounter())
   };
 
 
   return (
     <>
     {console.log(`rendering..`)}
-    {console.log(countrerActions)}
-    {console.log(counter)}
+    {console.log(useSelector(state=>state))}
+    {console.log(dispatch)}
+    <Header/>
     <h1>counter</h1>
       <button onClick={incrementHandler}>+</button>
       <button onClick={decrementHandler}>-</button>
