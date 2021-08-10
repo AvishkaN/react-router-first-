@@ -1,7 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit';
 
-// { title: 'Test Item', quantity: 3, total: 18, price: 6 }
 
 const initialStateCart={
     productItems:[
@@ -10,60 +9,66 @@ const initialStateCart={
         { id:3,title: 'Test Item 3',quantity:0, total:0, price: 3 ,description:'This is a first product - amazing! 3'}
     ],
     cartItems:[
-        { id:1,title: 'Test Item 1',quantity:0, total:0,price: 6 , description:'This is a first product - amazing!'},
-        { id:2,title: 'Test Item 2',quantity:0, total:0, price: 7 ,description:'This is a first product - amazing! 2'},
-        // { id:3,title: 'Test Item 3',quantity:0, total:0, price: 3 ,description:'This is a first product - amazing! 3'}
+        // { id:1,title: 'Test Item 1',quantity:0, total:0,price: 6 , description:'This is a first product - amazing!'},
+        // { id:2,title: 'Test Item 2',quantity:0, total:0, price: 7 ,description:'This is a first product - amazing! 2'},
     ],
-    // cartItems:[{id:1,title: 'Test Item 1',quantity:0, total:0,price: 6 , description:'This is a first product - amazing!'}],
-    counter:0,
+    totalCartItems:0,
+    openCartWindow:false,
+    fetchStatus:{
+        status:'',
+        title:'',
+        message:'',
+    }
 };
 
 const cartSlice=createSlice({
     name:'cart',
     initialState:initialStateCart,
     reducers:{
+        //1
         addCart(state,action){
+            
+            // check item alredy exisisting
             let index=state.cartItems
-            .findIndex(item=>item.id===action.payload); 
-            
-            // if(!index && index < 0 )  index='#';
-            if(index>=0 ) {
-                // alredy 
+              .findIndex(item=>item.id===action.payload); 
+                
+                // increase total cart items
+                state.totalCartItems++;
 
-                index=index;
+                // alredy existing item
+                if(index>=0 ) {
+                    let tergetItem=state.cartItems[index];
+                    state.cartItems[index]={
+                        ...tergetItem,
+                        quantity:tergetItem.quantity+1,
+                        total:tergetItem.total+tergetItem.price
 
-                const {cartItems}=state;
-                // const item=cartItems;
-                console.log(cartItems);
-                state.cartItems[index]={
-                    ...state.cartItems[index],
-                    quantity:state.cartItems[index].quantity+1,
-                    total:state.cartItems[index].total+state.cartItems[index].price
-
-                }
-
-                // state.cartItems.push(state.cartItems);
-                return;
+                    }
+                    return;
+                } 
+                
+                // new item
+                else{
+                    //get item by id
+                    let item=state.productItems
+                        .filter(item=>item.id===action.payload); 
+                    
+                    // create item object    
+                    item=Object.assign(...item);    
+                    item={...item,
+                        quantity:item.quantity+1,
+                        total:item.total+item.price
+                    }
+                    // add to new item
+                    state.cartItems.push(item)
             } 
-             else{
-            // new item
-            console.log(action);
-            
-            // get item from product array
-            let item=state.productItems
-                .filter(item=>item.id===action.payload); 
-            
-
-            item=Object.assign(...item);    
-            
-            item={...item,
-                quantity:item.quantity+1
-            }
-
-           
-            // state.cartItems.push(state.cartItems[index])
-            state.cartItems.push(item)
-        } 
+            },
+        showCart(state,action){
+            state.openCartWindow=!state.openCartWindow;
+        },
+        //2   
+        changeFetchStatus(state,action){
+            state.fetchStatus=action.payload;
         }
     }
 });

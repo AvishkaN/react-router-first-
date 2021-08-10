@@ -8,17 +8,11 @@ const Products = (props) => {
 
     //redux
     const dispatch=useDispatch();
-    
-    const cartR=useSelector(state=>state.reducer.productItems);
-    const cartitems=useSelector(state=>state.reducer.cartItems);
-    
-    console.log(cartR);
-    console.log(cartitems);
+    const productItem=useSelector(state=>state.reducer.productItems);
     //
 
     const addToCartHandler=(itemId)=>{
-      console.log(`add to cart`);
-      console.log(itemId);
+     
       dispatch(cartActions.addCart(itemId));
     };
 
@@ -28,7 +22,7 @@ const Products = (props) => {
       <h2>Buy your favorite products</h2>
       <ul>
         {
-        cartR.map(item=><ProductItem
+        productItem.map(item=><ProductItem
                   key={item.id}
                   id={item.id}
                   title= {item.title}
