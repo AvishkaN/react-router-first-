@@ -1,10 +1,14 @@
 import React from 'react'
+import {Route} from 'react-router-dom'
 
 function Welocme() {
     return (
-        <div>
+        <>
            <h1>welocme</h1> 
-        </div>
+           <Route path='/welcome/newUser'>
+                <p>New User 👤</p>
+           </Route>
+        </>
     )
 }
 
